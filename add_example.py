@@ -1,5 +1,5 @@
 from ctypes import CDLL, c_float
-from os.path import join
+from os.path import join, isfile
 
 
 def get_ctypes_source_file_location(c_types_source_file_name: str) -> str:
@@ -15,6 +15,8 @@ def get_ctypes_source_file_location(c_types_source_file_name: str) -> str:
 
 if __name__ == "__main__":
     ctypes_source_file_location = get_ctypes_source_file_location(c_types_source_file_name='adder.so')
+
+    assert isfile(ctypes_source_file_location)
 
     #load the shared object file
     adder = CDLL(ctypes_source_file_location)
