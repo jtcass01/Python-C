@@ -5,6 +5,8 @@ from os.path import join, isfile
 def get_ctypes_source_file_location(c_types_source_file_name: str) -> str:
     ctypes_source_file_location = str(__file__)
 
+    print(ctypes_source_file_location)
+
     if "/" in ctypes_source_file_location:
         ctypes_source_file_location = '/'.join(ctypes_source_file_location.split('/')[:-1])
     elif "\\" in ctypes_source_file_location:
