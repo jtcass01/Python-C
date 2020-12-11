@@ -5,8 +5,6 @@ from os.path import join, isfile, abspath
 def get_ctypes_source_file_location(c_types_source_file_name: str) -> str:
     ctypes_source_file_location = str(abspath(__file__))
 
-    print(ctypes_source_file_location)
-
     if "/" in ctypes_source_file_location:
         ctypes_source_file_location = '/'.join(ctypes_source_file_location.split('/')[:-1])
     elif "\\" in ctypes_source_file_location:
@@ -24,8 +22,7 @@ if __name__ == "__main__":
     adder = CDLL(ctypes_source_file_location)
 
     #Find sum of integers
-    res_int = adder.add_int(4,5)
-    print("Sum of 4 and 5 = " + str(res_int))
+    assert adder.add_int(4,5) == 9
 
     #Find sum of floats
     a = c_float(5.5)
@@ -33,4 +30,6 @@ if __name__ == "__main__":
 
     add_float = adder.add_float
     add_float.restype = c_float
-    print("Sum of 5.5 and 4.1 = ", str(add_float(a, b)))
+    c_types_float_result = add_float(a, b)
+
+    assert round(c_types_float_result, 2) == round(9.6, 2)
