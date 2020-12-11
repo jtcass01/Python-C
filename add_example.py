@@ -16,7 +16,7 @@ def get_ctypes_source_file_location(c_types_source_file_name: str) -> str:
 if __name__ == "__main__":
     ctypes_source_file_location = get_ctypes_source_file_location(c_types_source_file_name='adder.so')
 
-    assert isfile(ctypes_source_file_location)
+    assert isfile(ctypes_source_file_location), "Unable to locate file " + ctypes_source_file_location
 
     #load the shared object file
     adder = CDLL(ctypes_source_file_location)
