@@ -33,3 +33,5 @@ if __name__ == "__main__":
     c_types_float_result = add_float(a, b)
 
     assert round(c_types_float_result, 2) == round(9.6, 2)
+
+    print("Ctypes test was successful.")
