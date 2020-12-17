@@ -3,11 +3,20 @@ from os.path import join, isfile, abspath
 from unittest import TestCase, main
 
 
+def dir_path(file_path: str) -> str:
+    if "/" in file_path:
+        return '/'.join(file_path.split('/')[:-1])
+    elif "\\" in file_path:
+        return '\\'.join(file_path.split('\\')[:-1])
+
+
 class Ctypes_Test(TestCase):
+    CURRENT_WORKING_DIRECTORY = dir_path(__file__)
+
     def test_simple_add(self) -> None:
         print("Performing Ctypes simple add test.")
 
-        ctypes_source_file_location = get_ctypes_source_file_location(c_types_source_file_name='adder.so')
+        ctypes_source_file_location = join(Ctypes_Test.CURRENT_WORKING_DIRECTORY, "c_code", "adder.so")
         assert isfile(ctypes_source_file_location), "Unable to locate file " + ctypes_source_file_location
 
         #load the shared object file
@@ -27,26 +36,24 @@ class Ctypes_Test(TestCase):
         assert round(c_types_float_result, 2) == round(9.6, 2)
         print("Ctypes test was successful.")
 
-    def test_rti_dds_connector_load(self) -> None:
+    def test_arm6v_rti_dds_connector_load(self) -> None:
         print("Performing rti dds connector load test.")
 
-        ctypes_source_file_location = get_ctypes_source_file_location(c_types_source_file_name='librtiddsconnector.so')
+        ctypes_source_file_location = join(Ctypes_Test.CURRENT_WORKING_DIRECTORY, "arm6vfphLinux3.xgcc4.7.2", 'librtiddsconnector.so')
         assert isfile(ctypes_source_file_location), "Unable to locate file " + ctypes_source_file_location
 
         rti = CDLL(ctypes_source_file_location, RTLD_GLOBAL)
 
         print("RTI DDS Connector load test was successful.")
 
+    def test_64Linux_rti_dds_connector_load(self) -> None:
+        print("Performing rti dds connector load test.")
 
-def get_ctypes_source_file_location(c_types_source_file_name: str) -> str:
-    ctypes_source_file_location = str(abspath(__file__))
+        ctypes_source_file_location = join(Ctypes_Test.CURRENT_WORKING_DIRECTORY, "x64Linux2.6gcc4.4.5", 'librtiddsconnector.so')
+        assert isfile(ctypes_source_file_location), "Unable to locate file " + ctypes_source_file_location
+        rti = CDLL(ctypes_source_file_location, RTLD_GLOBAL)
 
-    if "/" in ctypes_source_file_location:
-        ctypes_source_file_location = '/'.join(ctypes_source_file_location.split('/')[:-1])
-    elif "\\" in ctypes_source_file_location:
-        ctypes_source_file_location = '\\'.join(ctypes_source_file_location.split('\\')[:-1])
-
-    return join(ctypes_source_file_location, 'c_code', c_types_source_file_name)
+        print("RTI DDS Connector load test was successful.")
 
 
 if __name__ == "__main__":
