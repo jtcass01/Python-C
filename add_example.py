@@ -39,7 +39,7 @@ class Ctypes_Test(TestCase):
     def test_arm6v_rti_dds_connector_load(self) -> None:
         print("Performing rti dds connector load test.")
 
-        ctypes_source_file_location = join(Ctypes_Test.CURRENT_WORKING_DIRECTORY, "arm6vfphLinux3.xgcc4.7.2", 'librtiddsconnector.so')
+        ctypes_source_file_location = join(Ctypes_Test.CURRENT_WORKING_DIRECTORY, "test_connectors", "arm6vfphLinux3.xgcc4.7.2", 'librtiddsconnector.so')
         assert isfile(ctypes_source_file_location), "Unable to locate file " + ctypes_source_file_location
 
         rti = CDLL(ctypes_source_file_location, RTLD_GLOBAL)
@@ -49,7 +49,7 @@ class Ctypes_Test(TestCase):
     def test_64Linux_rti_dds_connector_load(self) -> None:
         print("Performing rti dds connector load test.")
 
-        ctypes_source_file_location = join(Ctypes_Test.CURRENT_WORKING_DIRECTORY, "x64Linux2.6gcc4.4.5", 'librtiddsconnector.so')
+        ctypes_source_file_location = join(Ctypes_Test.CURRENT_WORKING_DIRECTORY, "test_connectors", "x64Linux2.6gcc4.4.5", 'librtiddsconnector.so')
         assert isfile(ctypes_source_file_location), "Unable to locate file " + ctypes_source_file_location
         rti = CDLL(ctypes_source_file_location, RTLD_GLOBAL)
 
