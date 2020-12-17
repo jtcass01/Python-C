@@ -11,7 +11,7 @@ def dir_path(file_path: str) -> str:
 
 
 class Ctypes_Test(TestCase):
-    CURRENT_WORKING_DIRECTORY = dir_path(__file__)
+    CURRENT_WORKING_DIRECTORY = dir_path(abspath(__file__))
 
     def test_simple_add(self) -> None:
         print("Performing Ctypes simple add test.")
