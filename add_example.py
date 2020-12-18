@@ -1,6 +1,6 @@
 from ctypes import CDLL, c_float, RTLD_GLOBAL
 from os.path import join, isfile, abspath
-from unittest import TestCase, main
+from unittest import TestCase, main, skip
 
 
 def dir_path(file_path: str) -> str:
@@ -36,6 +36,17 @@ class Ctypes_Test(TestCase):
         assert round(c_types_float_result, 2) == round(9.6, 2)
         print("Ctypes test was successful.")
 
+    def test_rti_dds_connector_load(self) -> None:
+        print("Performing rti dds connector load test.")
+
+        ctypes_source_file_location = join(Ctypes_Test.CURRENT_WORKING_DIRECTORY, "test_connectors", "jetson_nano", 'librtiddsconnector.so')
+        assert isfile(ctypes_source_file_location), "Unable to locate file " + ctypes_source_file_location
+
+        rti = CDLL(ctypes_source_file_location, RTLD_GLOBAL)
+
+        print("RTI DDS Connector load test was successful.")
+
+    @skip
     def test_arm6v_rti_dds_connector_load(self) -> None:
         print("Performing rti dds connector load test.")
 
@@ -46,6 +57,7 @@ class Ctypes_Test(TestCase):
 
         print("RTI DDS Connector load test was successful.")
 
+    @skip
     def test_64Linux_rti_dds_connector_load(self) -> None:
         print("Performing rti dds connector load test.")
 
